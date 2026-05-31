@@ -292,10 +292,9 @@ export default function Home() {
   );
 
   // ── SECTION 1: Spline Hero Transforms (Scroll: 0vh to 100vh -> scrollYProgress 0 to 0.1) ──
-  const splineOpacity = useTransform(scrollYProgress, [0.08, 0.1], [1, 0]);
-  const splineScale = useTransform(scrollYProgress, [0, 0.1], [1, 0.6]);
-  const splineTextOpacity = useTransform(scrollYProgress, [0, 0.08], [1, 0]);
-  const splineTextY = useTransform(scrollYProgress, [0, 0.08], [0, -30]);
+  const splineOpacity = useTransform(scrollYProgress, [0.08, 0.1], [1, 0], { clamp: true });
+  const splineScale = useTransform(scrollYProgress, [0, 0.1], [1, 0.6], { clamp: true });
+  const splineDisplay = useTransform(scrollYProgress, (p) => (p < 0.12 ? "block" : "none"));
 
   // ── SECTION 2: Explosion Canvas Transforms (Scroll: 100vh to 500vh -> scrollYProgress 0.1 to 0.5) ──
   const explosionOpacity = useTransform(
@@ -351,6 +350,7 @@ export default function Home() {
               style={{
                 opacity: splineOpacity,
                 scale: splineScale,
+                display: splineDisplay,
                 pointerEvents: isSplineActive,
               }}
               className="absolute inset-0 w-full h-full z-10 origin-center"
