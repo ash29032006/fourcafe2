@@ -293,6 +293,7 @@ export default function Home() {
 
   // ── SECTION 1: Spline Hero Transforms (Scroll: 0vh to 100vh -> scrollYProgress 0 to 0.1) ──
   const splineOpacity = useTransform(scrollYProgress, [0.08, 0.1], [1, 0]);
+  const splineScale = useTransform(scrollYProgress, [0, 0.1], [1, 0.6]);
   const splineTextOpacity = useTransform(scrollYProgress, [0, 0.08], [1, 0]);
   const splineTextY = useTransform(scrollYProgress, [0, 0.08], [0, -30]);
 
@@ -349,9 +350,10 @@ export default function Home() {
             <motion.div
               style={{
                 opacity: splineOpacity,
+                scale: splineScale,
                 pointerEvents: isSplineActive,
               }}
-              className="absolute inset-0 w-full h-full z-10"
+              className="absolute inset-0 w-full h-full z-10 origin-center"
             >
               <FourSplineIntro
                 scrollProgress={scrollYProgress}
