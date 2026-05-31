@@ -1,0 +1,220 @@
+@import "tailwindcss";
+
+/* ── FOUR Brand Theme ── */
+@theme inline {
+  --color-four-black: #0A0A0A;
+  --color-four-charcoal: #1F1F1F;
+  --color-four-sand: #B8AD9A;
+  --color-four-cream: #F2F0ED;
+  --color-four-ivory: #FAF8F5;
+  --color-four-bg: #0d0d0d;
+
+  --font-playfair: "Playfair Display", serif;
+  --font-inter: "Inter", sans-serif;
+}
+
+/* ── Base Styles ── */
+:root {
+  --background: #0d0d0d;
+  --foreground: #ededed;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: auto;
+  scroll-snap-type: y mandatory;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-inter);
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* ── Hide Scrollbar (all browsers) ── */
+html {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+html::-webkit-scrollbar {
+  display: none;
+}
+
+/* ── Selection ── */
+::selection {
+  background: rgba(184, 173, 154, 0.3);
+  color: #FAF8F5;
+}
+
+/* ── Canvas ── */
+canvas {
+  display: block;
+}
+
+/* ── Custom Cursor ── */
+.cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: difference;
+  transition: transform 0.15s ease, opacity 0.3s ease;
+}
+
+.cursor-glow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(
+    circle,
+    rgba(184, 173, 154, 0.06) 0%,
+    rgba(184, 173, 154, 0.02) 30%,
+    transparent 70%
+  );
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transition: opacity 0.5s ease;
+}
+
+/* Scale cursor on interactive elements */
+a:hover ~ .cursor-dot,
+button:hover ~ .cursor-dot {
+  transform: scale(3);
+}
+
+/* ── Film Grain Overlay ── */
+.grain-overlay {
+  position: fixed;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  z-index: 9997;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+  animation: grain 8s steps(10) infinite;
+}
+
+@keyframes grain {
+  0%, 100% { transform: translate(0, 0); }
+  10% { transform: translate(-5%, -10%); }
+  20% { transform: translate(-15%, 5%); }
+  30% { transform: translate(7%, -25%); }
+  40% { transform: translate(-5%, 25%); }
+  50% { transform: translate(-15%, 10%); }
+  60% { transform: translate(15%, 0%); }
+  70% { transform: translate(0%, 15%); }
+  80% { transform: translate(3%, 35%); }
+  90% { transform: translate(-10%, 10%); }
+}
+
+/* ── Space Card Image Hover ── */
+.space-card-image {
+  transition: transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              filter 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  filter: brightness(0.6) saturate(0.8);
+}
+
+.space-card:hover .space-card-image {
+  transform: scale(1.08);
+  filter: brightness(0.75) saturate(1);
+}
+
+/* ── Space Card Border Glow ── */
+.space-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.space-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  z-index: 2;
+  transition: border-color 0.8s ease;
+}
+
+.space-card:hover::before {
+  border-color: rgba(184, 173, 154, 0.15);
+}
+
+/* ── Horizontal Line Reveal ── */
+.line-reveal {
+  width: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+  transition: width 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.line-reveal.visible {
+  width: 100%;
+}
+
+/* ── Magnetic Button ── */
+.magnetic-btn {
+  position: relative;
+  display: inline-block;
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.magnetic-btn::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  transition: all 0.5s ease;
+}
+
+.magnetic-btn:hover::after {
+  inset: -4px;
+  border-color: rgba(184, 173, 154, 0.3);
+}
+
+/* ── Breathing Animation ── */
+@keyframes breathe {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+.breathe {
+  animation: breathe 4s ease-in-out infinite;
+}
+
+/* ── Slow Float ── */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+.float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* ── Show cursor on mobile ── */
+@media (max-width: 768px) {
+  body {
+    cursor: auto;
+  }
+  .cursor-dot,
+  .cursor-glow {
+    display: none !important;
+  }
+}
